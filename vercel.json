@@ -1,4 +1,6 @@
 {
   "buildCommand": "python build.py",
-  "outputDirectory": "public"
+  "outputDirectory": "public",
+  "framework": null,
+  "installCommand": "pip install -r requirements.txt"
 }
