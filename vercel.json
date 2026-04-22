@@ -9,5 +9,6 @@
       "runtime": "python3.12"
     }
   },
-  "regions": ["iad1"]
+  "regions": ["iad1"],
+  "buildEndpoint": true
 }
