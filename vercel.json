@@ -1,7 +1,4 @@
 {
-  "buildCommand": "pip install -r requirements.txt && python src/train_model.py",
-  "outputDirectory": ".",
-  "env": {
-    "PYTHONUNBUFFERED": "1"
-  }
+  "buildCommand": "python build.py",
+  "outputDirectory": "public"
 }
