@@ -1,0 +1,604 @@
+{
+  "cv_accuracy": 65.87,
+  "team_predictions": {
+    "Mumbai Indians": {
+      "score": 0.3510191846522782,
+      "current_wr": 20.0,
+      "historical_wr": 54.7,
+      "recent_wr": 43.3,
+      "games_played_2026": 5,
+      "wins_2026": 1,
+      "championship_probability": 6.91
+    },
+    "Chennai Super Kings": {
+      "score": 0.4304411764705882,
+      "current_wr": 40.0,
+      "historical_wr": 56.5,
+      "recent_wr": 39.3,
+      "games_played_2026": 5,
+      "wins_2026": 2,
+      "championship_probability": 8.48
+    },
+    "Royal Challengers Bengaluru": {
+      "score": 0.6957142857142857,
+      "current_wr": 80.0,
+      "historical_wr": 62.9,
+      "recent_wr": 60.0,
+      "games_played_2026": 5,
+      "wins_2026": 4,
+      "championship_probability": 13.7
+    },
+    "Kolkata Knight Riders": {
+      "score": 0.3180462123427903,
+      "current_wr": 0.0,
+      "historical_wr": 51.3,
+      "recent_wr": 61.5,
+      "games_played_2026": 4,
+      "wins_2026": 0,
+      "championship_probability": 6.26
+    },
+    "Delhi Capitals": {
+      "score": 0.5019230769230769,
+      "current_wr": 50.0,
+      "historical_wr": 51.0,
+      "recent_wr": 50.0,
+      "games_played_2026": 4,
+      "wins_2026": 2,
+      "championship_probability": 9.89
+    },
+    "Rajasthan Royals": {
+      "score": 0.6233547008547009,
+      "current_wr": 80.0,
+      "historical_wr": 50.4,
+      "recent_wr": 46.4,
+      "games_played_2026": 5,
+      "wins_2026": 4,
+      "championship_probability": 12.28
+    },
+    "Sunrisers Hyderabad": {
+      "score": 0.4579732582688248,
+      "current_wr": 40.0,
+      "historical_wr": 48.5,
+      "recent_wr": 51.7,
+      "games_played_2026": 5,
+      "wins_2026": 2,
+      "championship_probability": 9.02
+    },
+    "Punjab Kings": {
+      "score": 0.725,
+      "current_wr": 100.0,
+      "historical_wr": 50.0,
+      "recent_wr": 50.0,
+      "games_played_2026": 4,
+      "wins_2026": 4,
+      "championship_probability": 14.28
+    },
+    "Gujarat Titans": {
+      "score": 0.5283564814814814,
+      "current_wr": 50.0,
+      "historical_wr": 60.9,
+      "recent_wr": 51.9,
+      "games_played_2026": 4,
+      "wins_2026": 2,
+      "championship_probability": 10.41
+    },
+    "Lucknow Super Giants": {
+      "score": 0.4457258064516129,
+      "current_wr": 40.0,
+      "historical_wr": 51.6,
+      "recent_wr": 46.4,
+      "games_played_2026": 5,
+      "wins_2026": 2,
+      "championship_probability": 8.78
+    }
+  },
+  "historical": {
+    "champions": {
+      "2007/08": "Rajasthan Royals",
+      "2009": "Deccan Chargers",
+      "2009/10": "Chennai Super Kings",
+      "2011": "Chennai Super Kings",
+      "2012": "Kolkata Knight Riders",
+      "2013": "Mumbai Indians",
+      "2014": "Kolkata Knight Riders",
+      "2015": "Mumbai Indians",
+      "2016": "Sunrisers Hyderabad",
+      "2017": "Mumbai Indians",
+      "2018": "Chennai Super Kings",
+      "2019": "Mumbai Indians",
+      "2020/21": "Mumbai Indians",
+      "2021": "Chennai Super Kings",
+      "2022": "Gujarat Titans",
+      "2023": "Chennai Super Kings",
+      "2024": "Kolkata Knight Riders",
+      "2025": "Royal Challengers Bengaluru"
+    },
+    "team_stats": {
+      "Chennai Super Kings": {
+        "total_played": 255,
+        "total_wins": 144,
+        "win_rate": 56.5,
+        "titles": 5,
+        "seasons": 17
+      },
+      "Deccan Chargers": {
+        "total_played": 75,
+        "total_wins": 29,
+        "win_rate": 38.7,
+        "titles": 1,
+        "seasons": 5
+      },
+      "Delhi Capitals": {
+        "total_played": 104,
+        "total_wins": 53,
+        "win_rate": 51.0,
+        "titles": 0,
+        "seasons": 8
+      },
+      "Delhi Daredevils": {
+        "total_played": 158,
+        "total_wins": 67,
+        "win_rate": 42.4,
+        "titles": 0,
+        "seasons": 11
+      },
+      "Gujarat Lions": {
+        "total_played": 29,
+        "total_wins": 13,
+        "win_rate": 44.8,
+        "titles": 0,
+        "seasons": 2
+      },
+      "Gujarat Titans": {
+        "total_played": 64,
+        "total_wins": 39,
+        "win_rate": 60.9,
+        "titles": 1,
+        "seasons": 5
+      },
+      "Kings XI Punjab": {
+        "total_played": 186,
+        "total_wins": 85,
+        "win_rate": 45.7,
+        "titles": 0,
+        "seasons": 13
+      },
+      "Kochi Tuskers Kerala": {
+        "total_played": 14,
+        "total_wins": 6,
+        "win_rate": 42.9,
+        "titles": 0,
+        "seasons": 1
+      },
+      "Kolkata Knight Riders": {
+        "total_played": 263,
+        "total_wins": 135,
+        "win_rate": 51.3,
+        "titles": 3,
+        "seasons": 19
+      },
+      "Lucknow Super Giants": {
+        "total_played": 62,
+        "total_wins": 32,
+        "win_rate": 51.6,
+        "titles": 0,
+        "seasons": 5
+      },
+      "Mumbai Indians": {
+        "total_played": 278,
+        "total_wins": 152,
+        "win_rate": 54.7,
+        "titles": 5,
+        "seasons": 19
+      },
+      "Pune Warriors": {
+        "total_played": 45,
+        "total_wins": 12,
+        "win_rate": 26.7,
+        "titles": 0,
+        "seasons": 3
+      },
+      "Punjab Kings": {
+        "total_played": 76,
+        "total_wins": 38,
+        "win_rate": 50.0,
+        "titles": 0,
+        "seasons": 6
+      },
+      "Rajasthan Royals": {
+        "total_played": 234,
+        "total_wins": 118,
+        "win_rate": 50.4,
+        "titles": 1,
+        "seasons": 17
+      },
+      "Rising Pune Supergiant": {
+        "total_played": 16,
+        "total_wins": 10,
+        "win_rate": 62.5,
+        "titles": 0,
+        "seasons": 1
+      },
+      "Rising Pune Supergiants": {
+        "total_played": 14,
+        "total_wins": 5,
+        "win_rate": 35.7,
+        "titles": 0,
+        "seasons": 1
+      },
+      "Royal Challengers Bangalore": {
+        "total_played": 234,
+        "total_wins": 114,
+        "win_rate": 48.7,
+        "titles": 0,
+        "seasons": 16
+      },
+      "Royal Challengers Bengaluru": {
+        "total_played": 35,
+        "total_wins": 22,
+        "win_rate": 62.9,
+        "titles": 1,
+        "seasons": 3
+      },
+      "Sunrisers Hyderabad": {
+        "total_played": 196,
+        "total_wins": 95,
+        "win_rate": 48.5,
+        "titles": 1,
+        "seasons": 14
+      }
+    },
+    "seasons": [
+      {
+        "season": "2007/08",
+        "champion": "Rajasthan Royals",
+        "total_matches": 58
+      },
+      {
+        "season": "2009",
+        "champion": "Deccan Chargers",
+        "total_matches": 56
+      },
+      {
+        "season": "2009/10",
+        "champion": "Chennai Super Kings",
+        "total_matches": 59
+      },
+      {
+        "season": "2011",
+        "champion": "Chennai Super Kings",
+        "total_matches": 72
+      },
+      {
+        "season": "2012",
+        "champion": "Kolkata Knight Riders",
+        "total_matches": 74
+      },
+      {
+        "season": "2013",
+        "champion": "Mumbai Indians",
+        "total_matches": 74
+      },
+      {
+        "season": "2014",
+        "champion": "Kolkata Knight Riders",
+        "total_matches": 59
+      },
+      {
+        "season": "2015",
+        "champion": "Mumbai Indians",
+        "total_matches": 56
+      },
+      {
+        "season": "2016",
+        "champion": "Sunrisers Hyderabad",
+        "total_matches": 60
+      },
+      {
+        "season": "2017",
+        "champion": "Mumbai Indians",
+        "total_matches": 58
+      },
+      {
+        "season": "2018",
+        "champion": "Chennai Super Kings",
+        "total_matches": 60
+      },
+      {
+        "season": "2019",
+        "champion": "Mumbai Indians",
+        "total_matches": 57
+      },
+      {
+        "season": "2020/21",
+        "champion": "Mumbai Indians",
+        "total_matches": 56
+      },
+      {
+        "season": "2021",
+        "champion": "Chennai Super Kings",
+        "total_matches": 59
+      },
+      {
+        "season": "2022",
+        "champion": "Gujarat Titans",
+        "total_matches": 74
+      },
+      {
+        "season": "2023",
+        "champion": "Chennai Super Kings",
+        "total_matches": 73
+      },
+      {
+        "season": "2024",
+        "champion": "Kolkata Knight Riders",
+        "total_matches": 71
+      },
+      {
+        "season": "2025",
+        "champion": "Royal Challengers Bengaluru",
+        "total_matches": 70
+      },
+      {
+        "season": "2026",
+        "champion": "TBD",
+        "total_matches": 23
+      }
+    ],
+    "venue_stats": [
+      {
+        "venue": "Eden Gardens",
+        "matches": 77,
+        "batting_first_wins": 30,
+        "bat_first_pct": 39.0
+      },
+      {
+        "venue": "Wankhede Stadium",
+        "matches": 72,
+        "batting_first_wins": 35,
+        "bat_first_pct": 48.6
+      },
+      {
+        "venue": "M Chinnaswamy Stadium",
+        "matches": 62,
+        "batting_first_wins": 26,
+        "bat_first_pct": 41.9
+      },
+      {
+        "venue": "Feroz Shah Kotla",
+        "matches": 59,
+        "batting_first_wins": 27,
+        "bat_first_pct": 45.8
+      },
+      {
+        "venue": "Wankhede Stadium, Mumbai",
+        "matches": 55,
+        "batting_first_wins": 22,
+        "bat_first_pct": 40.0
+      },
+      {
+        "venue": "Rajiv Gandhi International Stadium, Uppal",
+        "matches": 48,
+        "batting_first_wins": 19,
+        "bat_first_pct": 39.6
+      },
+      {
+        "venue": "MA Chidambaram Stadium, Chepauk",
+        "matches": 47,
+        "batting_first_wins": 30,
+        "bat_first_pct": 63.8
+      },
+      {
+        "venue": "Sawai Mansingh Stadium",
+        "matches": 47,
+        "batting_first_wins": 15,
+        "bat_first_pct": 31.9
+      },
+      {
+        "venue": "Dubai International Cricket Stadium",
+        "matches": 43,
+        "batting_first_wins": 21,
+        "bat_first_pct": 48.8
+      },
+      {
+        "venue": "MA Chidambaram Stadium, Chepauk, Chennai",
+        "matches": 36,
+        "batting_first_wins": 17,
+        "bat_first_pct": 47.2
+      },
+      {
+        "venue": "Punjab Cricket Association Stadium, Mohali",
+        "matches": 35,
+        "batting_first_wins": 15,
+        "bat_first_pct": 42.9
+      },
+      {
+        "venue": "Narendra Modi Stadium, Ahmedabad",
+        "matches": 34,
+        "batting_first_wins": 17,
+        "bat_first_pct": 50.0
+      },
+      {
+        "venue": "Sharjah Cricket Stadium",
+        "matches": 28,
+        "batting_first_wins": 10,
+        "bat_first_pct": 35.7
+      },
+      {
+        "venue": "Sheikh Zayed Stadium",
+        "matches": 27,
+        "batting_first_wins": 11,
+        "bat_first_pct": 40.7
+      },
+      {
+        "venue": "Arun Jaitley Stadium, Delhi",
+        "matches": 24,
+        "batting_first_wins": 13,
+        "bat_first_pct": 54.2
+      }
+    ]
+  },
+  "matches_2026": [
+    {
+      "match_id": 1527674,
+      "team1": "Sunrisers Hyderabad",
+      "team2": "Royal Challengers Bengaluru",
+      "winner": "Royal Challengers Bengaluru",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527675,
+      "team1": "Kolkata Knight Riders",
+      "team2": "Mumbai Indians",
+      "winner": "Mumbai Indians",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527676,
+      "team1": "Chennai Super Kings",
+      "team2": "Rajasthan Royals",
+      "winner": "Rajasthan Royals",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527677,
+      "team1": "Gujarat Titans",
+      "team2": "Punjab Kings",
+      "winner": "Punjab Kings",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527678,
+      "team1": "Lucknow Super Giants",
+      "team2": "Delhi Capitals",
+      "winner": "Delhi Capitals",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527679,
+      "team1": "Sunrisers Hyderabad",
+      "team2": "Kolkata Knight Riders",
+      "winner": "Sunrisers Hyderabad",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527680,
+      "team1": "Chennai Super Kings",
+      "team2": "Punjab Kings",
+      "winner": "Punjab Kings",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527681,
+      "team1": "Mumbai Indians",
+      "team2": "Delhi Capitals",
+      "winner": "Delhi Capitals",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527682,
+      "team1": "Rajasthan Royals",
+      "team2": "Gujarat Titans",
+      "winner": "Rajasthan Royals",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527683,
+      "team1": "Sunrisers Hyderabad",
+      "team2": "Lucknow Super Giants",
+      "winner": "Lucknow Super Giants",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527684,
+      "team1": "Royal Challengers Bengaluru",
+      "team2": "Chennai Super Kings",
+      "winner": "Royal Challengers Bengaluru",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527686,
+      "team1": "Rajasthan Royals",
+      "team2": "Mumbai Indians",
+      "winner": "Rajasthan Royals",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527687,
+      "team1": "Gujarat Titans",
+      "team2": "Delhi Capitals",
+      "winner": "Gujarat Titans",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527688,
+      "team1": "Kolkata Knight Riders",
+      "team2": "Lucknow Super Giants",
+      "winner": "Lucknow Super Giants",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527689,
+      "team1": "Royal Challengers Bengaluru",
+      "team2": "Rajasthan Royals",
+      "winner": "Rajasthan Royals",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527690,
+      "team1": "Sunrisers Hyderabad",
+      "team2": "Punjab Kings",
+      "winner": "Punjab Kings",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527691,
+      "team1": "Chennai Super Kings",
+      "team2": "Delhi Capitals",
+      "winner": "Chennai Super Kings",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527692,
+      "team1": "Lucknow Super Giants",
+      "team2": "Gujarat Titans",
+      "winner": "Gujarat Titans",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1527693,
+      "team1": "Royal Challengers Bengaluru",
+      "team2": "Mumbai Indians",
+      "winner": "Royal Challengers Bengaluru",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1529264,
+      "team1": "Sunrisers Hyderabad",
+      "team2": "Rajasthan Royals",
+      "winner": "Sunrisers Hyderabad",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1529265,
+      "team1": "Chennai Super Kings",
+      "team2": "Kolkata Knight Riders",
+      "winner": "Chennai Super Kings",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1529266,
+      "team1": "Lucknow Super Giants",
+      "team2": "Royal Challengers Bengaluru",
+      "winner": "Royal Challengers Bengaluru",
+      "stage": "Unknown"
+    },
+    {
+      "match_id": 1529267,
+      "team1": "Mumbai Indians",
+      "team2": "Punjab Kings",
+      "winner": "Punjab Kings",
+      "stage": "Unknown"
+    }
+  ]
+}

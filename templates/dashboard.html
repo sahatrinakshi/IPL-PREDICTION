@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IPL 2026 Prediction Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  <style>
+    :root {
+      --gold:   #FFD700;
+      --gold2:  #FFA500;
+      --blue:   #0a1628;
+      --blue2:  #0d2040;
+      --blue3:  #112255;
+      --accent: #00c8ff;
+      --accent2:#7b5cff;
+      --green:  #00e676;
+      --red:    #ff4444;
+      --text:   #e8eaf6;
+      --muted:  #8892a4;
+      --card:   rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--blue);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ──────────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, #0a1628 0%, #1a0a3a 50%, #0a1628 100%);
+      border-bottom: 2px solid var(--gold);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 30px rgba(255,215,0,0.15);
+    }
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-area { display: flex; align-items: center; gap: 14px; }
+    .logo-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 0 20px rgba(255,215,0,0.4);
+    }
+    .logo-text h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo-text p { font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+    .header-meta { display: flex; align-items: center; gap: 24px; }
+    .accuracy-badge {
+      background: linear-gradient(135deg, rgba(0,200,255,0.15), rgba(123,92,255,0.15));
+      border: 1px solid var(--accent);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    nav { display: flex; gap: 4px; }
+    nav a {
+      padding: 8px 16px;
+      border-radius: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    nav a:hover, nav a.active { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    /* ─── MAIN LAYOUT ──────────────────────────────────── */
+    main { max-width: 1400px; margin: 0 auto; padding: 28px 24px 60px; }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #0d2040 0%, #1a0a3a 50%, #0d1a40 100%);
+      border: 1px solid var(--gold);
+      border-radius: 20px;
+      padding: 40px 48px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -10%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-left h2 {
+      font-size: 2.4rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .hero-left h2 span {
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-left p { color: var(--muted); font-size: 0.95rem; max-width: 420px; line-height: 1.6; }
+    .hero-right { display: flex; gap: 20px; flex-shrink: 0; }
+    .stat-pill {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 28px;
+      text-align: center;
+      min-width: 130px;
+    }
+    .stat-pill .val {
+      font-size: 2rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-pill .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+    /* ─── SECTION HEADERS ──────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      margin-top: 36px;
+    }
+    .section-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .section-header .badge {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--blue);
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ─── PREDICTION CARDS ──────────────────────────────── */
+    .pred-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .pred-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      cursor: default;
+    }
+    .pred-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .pred-card.rank-1 {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,165,0,0.04));
+      box-shadow: 0 0 30px rgba(255,215,0,0.12);
+    }
+    .pred-card.rank-2 {
+      border-color: #adb5bd;
+      background: linear-gradient(135deg, rgba(173,181,189,0.08), transparent);
+    }
+    .pred-card.rank-3 {
+      border-color: #cd7f32;
+      background: linear-gradient(135deg, rgba(205,127,50,0.08), transparent);
+    }
+    .card-rank {
+      position: absolute;
+      top: 12px; right: 14px;
+      font-size: 1.4rem;
+      font-weight: 900;
+      opacity: 0.15;
+    }
+    .rank-1 .card-rank { color: var(--gold); opacity: 0.4; }
+    .rank-2 .card-rank { color: #adb5bd; opacity: 0.4; }
+    .rank-3 .card-rank { color: #cd7f32; opacity: 0.4; }
+    .team-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+    .card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .card-top-info h4 { font-size: 0.95rem; font-weight: 700; line-height: 1.2; }
+    .card-top-info p { font-size: 0.72rem; color: var(--muted); }
+    .prob-bar-wrap { margin-bottom: 12px; }
+    .prob-bar-wrap .prob-label {
+      display: flex; justify-content: space-between;
+      font-size: 0.75rem; color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .prob-bar-wrap .prob-label span:last-child { color: var(--text); font-weight: 700; font-size: 0.9rem; }
+    .prob-bar {
+      height: 7px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .prob-bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 1s ease;
+    }
+    .rank-1 .prob-bar-fill { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+    .rank-2 .prob-bar-fill { background: linear-gradient(90deg, #adb5bd, #868e96); }
+    .rank-3 .prob-bar-fill { background: linear-gradient(90deg, #cd7f32, #a0522d); }
+    .prob-bar-fill.default { background: linear-gradient(90deg, var(--accent2), var(--accent)); }
+    .card-stats { display: flex; gap: 12px; }
+    .mini-stat { flex: 1; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 7px 10px; }
+    .mini-stat .ms-val { font-size: 0.85rem; font-weight: 700; }
+    .mini-stat .ms-lbl { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; }
+    .trophy { font-size: 0.9rem; }
+
+    /* ─── TABS ──────────────────────────────────────────── */
+    .tabs-wrap { margin-top: 36px; }
+    .tab-buttons { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.2s;
+      border-radius: 6px 6px 0 0;
+    }
+    .tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); background: rgba(255,215,0,0.05); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* ─── CHARTS ────────────────────────────────────────── */
+    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .chart-card h4 { font-size: 0.9rem; color: var(--muted); margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .chart-card.full { grid-column: 1 / -1; }
+
+    /* ─── HISTORICAL TABLE ──────────────────────────────── */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    thead tr { background: rgba(255,255,255,0.06); }
+    th { padding: 12px 16px; text-align: left; color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 1px; border-bottom: 1px solid var(--border); }
+    td { padding: 11px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    tbody tr:hover { background: rgba(255,255,255,0.04); }
+    .champion-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,165,0,0.08));
+      border: 1px solid rgba(255,215,0,0.3);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .tbd-badge {
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .win-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+    /* ─── MATCHES TABLE ─────────────────────────────────── */
+    .match-list { display: flex; flex-direction: column; gap: 8px; }
+    .match-row {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+    }
+    .match-vs { color: var(--muted); font-size: 0.7rem; margin: 0 4px; }
+    .match-winner { margin-left: auto; color: var(--green); font-size: 0.8rem; font-weight: 600; }
+    .match-idx { color: var(--muted); font-size: 0.75rem; min-width: 24px; }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 28px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 40px;
+    }
+    footer span { color: var(--gold); }
+
+    /* ─── SCROLLBAR ──────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--blue2); }
+    ::-webkit-scrollbar-thumb { background: var(--blue3); border-radius: 3px; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; padding: 28px; }
+      .chart-grid { grid-template-columns: 1fr; }
+      .hero-right { flex-wrap: wrap; }
+    }
+    @media (max-width: 600px) {
+      .header-meta { display: none; }
+      main { padding: 16px; }
+      .pred-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-icon">🏏</div>
+      <div class="logo-text">
+        <h1>IPL 2026 Predictor</h1>
+        <p>ML-Powered Championship Forecast</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="accuracy-badge">
+        Model Accuracy: <strong>{{ data.cv_accuracy }}%</strong>
+      </div>
+      <nav>
+        <a href="#predictions" class="active">Predictions</a>
+        <a href="#analysis">Analysis</a>
+        <a href="#history">History</a>
+        <a href="#matches">Matches</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <h2>Who Will Lift The<br><span>IPL 2026 Trophy?</span></h2>
+      <p>Our XGBoost ML model analyzes {{ "{:,}".format(data.historical.seasons | length) }} seasons of IPL data —
+        win rates, head-to-head records, venue performance, toss outcomes & current 2026 form
+        to predict the champion.</p>
+    </div>
+    <div class="hero-right">
+      {% set sorted_teams = data.team_predictions_sorted %}
+      <div class="stat-pill">
+        <div class="val">{{ data.cv_accuracy }}%</div>
+        <div class="lbl">Model CV Accuracy</div>
+      </div>
+      <div class="stat-pill">
+        <div class="val">{{ data.historical.seasons | length }}</div>
+        <div class="lbl">IPL Seasons</div>
+      </div>
+      <div class="stat-pill">
+        <div class="val">{{ data.matches_2026 | length }}</div>
+        <div class="lbl">2026 Matches Played</div>
+      </div>
+      <div class="stat-pill">
+        <div class="val">10</div>
+        <div class="lbl">Teams in 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREDICTIONS -->
+  <div id="predictions">
+    <div class="section-header">
+      <h3>🏆 2026 Championship Predictions</h3>
+      <span class="badge">Live</span>
+      <div class="section-line"></div>
+    </div>
+
+    {% set teams_data = [] %}
+    {% for team, stats in data.team_predictions.items() %}
+      {% set _ = teams_data.append((team, stats)) %}
+    {% endfor %}
+    {% set teams_sorted = teams_data | sort(attribute='1.championship_probability', reverse=True) %}
+
+    <div class="pred-grid">
+    {% for team, stats in teams_sorted %}
+      {% set rank = loop.index %}
+      {% set rank_cls = 'rank-' ~ rank if rank <= 3 else '' %}
+      <div class="pred-card {{ rank_cls }}">
+        <div class="card-rank">#{{ rank }}</div>
+        <div class="card-top">
+          <div class="team-avatar" style="background: {{ team_color(team) }}; color: #fff;">
+            {{ team_initials(team) }}
+          </div>
+          <div class="card-top-info">
+            <h4>{{ team }}</h4>
+            <p>
+              {% for s, w in data.historical.champions.items() %}
+                {% if w == team %}🏆{% endif %}
+              {% endfor %}
+              {{ stats.titles }} title{{ 's' if stats.titles != 1 else '' }}
+            </p>
+          </div>
+        </div>
+        <div class="prob-bar-wrap">
+          <div class="prob-label">
+            <span>Championship Probability</span>
+            <span>{{ stats.championship_probability }}%</span>
+          </div>
+          <div class="prob-bar">
+            <div class="prob-bar-fill {{ '' if rank <= 3 else 'default' }}"
+                 style="width: {{ stats.championship_probability * 3.5 | round(1) }}%;"></div>
+          </div>
+        </div>
+        <div class="card-stats">
+          <div class="mini-stat">
+            <div class="ms-val">{{ stats.current_wr }}%</div>
+            <div class="ms-lbl">2026 Win%</div>
+          </div>
+          <div class="mini-stat">
+            <div class="ms-val">{{ stats.recent_wr }}%</div>
+            <div class="ms-lbl">Recent Form</div>
+          </div>
+          <div class="mini-stat">
+            <div class="ms-val">{{ stats.wins_2026 }}/{{ stats.games_played_2026 }}</div>
+            <div class="ms-lbl">W/P 2026</div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+
+  <!-- ANALYSIS TABS -->
+  <div id="analysis" class="tabs-wrap">
+    <div class="section-header">
+      <h3>📊 Deep Analysis</h3>
+      <div class="section-line"></div>
+    </div>
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="showTab('prob-tab', this)">Win Probability</button>
+      <button class="tab-btn" onclick="showTab('team-tab', this)">Team Stats</button>
+      <button class="tab-btn" onclick="showTab('venue-tab', this)">Venue Analysis</button>
+      <button class="tab-btn" onclick="showTab('season-tab', this)">Season Trends</button>
+    </div>
+
+    <div id="prob-tab" class="tab-pane active">
+      <div class="chart-grid">
+        <div class="chart-card full">
+          <h4>2026 Championship Probability Distribution</h4>
+          <div id="chart-prob" style="height: 400px;"></div>
+        </div>
+        <div class="chart-card">
+          <h4>2026 Win Rate vs Historical Win Rate</h4>
+          <div id="chart-scatter" style="height: 360px;"></div>
+        </div>
+        <div class="chart-card">
+          <h4>Recent Form (Last 2 Seasons) vs 2026 Performance</h4>
+          <div id="chart-form" style="height: 360px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="team-tab" class="tab-pane">
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h4>All-Time Win Rate by Team</h4>
+          <div id="chart-winrate" style="height: 380px;"></div>
+        </div>
+        <div class="chart-card">
+          <h4>Total Matches Played by Team</h4>
+          <div id="chart-matches" style="height: 380px;"></div>
+        </div>
+        <div class="chart-card full">
+          <h4>IPL Titles Won by Team</h4>
+          <div id="chart-titles" style="height: 320px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="venue-tab" class="tab-pane">
+      <div class="chart-grid">
+        <div class="chart-card full">
+          <h4>Batting First Win % by Venue (min 5 matches)</h4>
+          <div id="chart-venue" style="height: 420px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="season-tab" class="tab-pane">
+      <div class="chart-grid">
+        <div class="chart-card full">
+          <h4>Matches Per Season (2008–2026)</h4>
+          <div id="chart-season" style="height: 360px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div id="history">
+    <div class="section-header">
+      <h3>📜 IPL Champions History</h3>
+      <div class="section-line"></div>
+    </div>
+    <div class="chart-card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Season</th>
+              <th>Champion</th>
+              <th>Total Matches</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for s in data.historical.seasons | reverse %}
+            <tr>
+              <td><strong>{{ s.season }}</strong></td>
+              <td>
+                {% if s.champion == 'TBD' %}
+                  <span class="tbd-badge">🔄 In Progress</span>
+                {% else %}
+                  <span class="champion-badge">🏆 {{ s.champion }}</span>
+                {% endif %}
+              </td>
+              <td>{{ s.total_matches }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2026 MATCHES -->
+  <div id="matches">
+    <div class="section-header">
+      <h3>🗓️ IPL 2026 Matches Played</h3>
+      <span class="badge">{{ data.matches_2026 | length }} matches</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="match-list">
+    {% for m in data.matches_2026 %}
+      <div class="match-row">
+        <span class="match-idx">{{ loop.index }}</span>
+        <span>{{ m.team1 }}</span>
+        <span class="match-vs">vs</span>
+        <span>{{ m.team2 }}</span>
+        <span class="match-winner">🏆 {{ m.winner }}</span>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Built with <span>XGBoost ML</span> · IPL Data 2008–2026 · {{ data.historical.seasons | length }} Seasons · {{ data.cv_accuracy }}% Model Accuracy
+</footer>
+
+<script>
+const PREDS = {{ data.team_predictions | tojson }};
+const HIST  = {{ data.historical | tojson }};
+
+const BG = '#0a1628';
+const PAPER = 'rgba(0,0,0,0)';
+const TEXT = '#e8eaf6';
+const MUTED = '#8892a4';
+const GOLD = '#FFD700';
+const ACCENT = '#00c8ff';
+const ACCENT2 = '#7b5cff';
+const GREEN = '#00e676';
+
+const TEAM_COLORS = {
+  'Mumbai Indians': '#004B9F',
+  'Chennai Super Kings': '#F7A721',
+  'Royal Challengers Bengaluru': '#CB2026',
+  'Kolkata Knight Riders': '#552E8E',
+  'Delhi Capitals': '#17479E',
+  'Rajasthan Royals': '#C91A7B',
+  'Sunrisers Hyderabad': '#F7991D',
+  'Punjab Kings': '#D71921',
+  'Gujarat Titans': '#1B2133',
+  'Lucknow Super Giants': '#2ECC71',
+};
+
+function teamColor(t) {
+  return TEAM_COLORS[t] || ACCENT2;
+}
+
+const layout_base = {
+  paper_bgcolor: PAPER,
+  plot_bgcolor: PAPER,
+  font: { family: 'Segoe UI, system-ui', color: TEXT, size: 12 },
+  margin: { l: 10, r: 10, t: 10, b: 10 },
+  xaxis: { gridcolor: 'rgba(255,255,255,0.06)', zerolinecolor: 'rgba(255,255,255,0.1)', color: MUTED },
+  yaxis: { gridcolor: 'rgba(255,255,255,0.06)', zerolinecolor: 'rgba(255,255,255,0.1)', color: MUTED },
+  legend: { bgcolor: 'rgba(0,0,0,0)', font: { color: TEXT } },
+};
+
+const config = { displayModeBar: false, responsive: true };
+
+// ── CHART 1: Championship Probability Bar ────────────────────────
+(function() {
+  const teams = Object.keys(PREDS).sort((a,b) => PREDS[b].championship_probability - PREDS[a].championship_probability);
+  const probs = teams.map(t => PREDS[t].championship_probability);
+  const colors = teams.map(teamColor);
+
+  Plotly.newPlot('chart-prob', [{
+    type: 'bar',
+    x: teams.map(t => t.replace(' ', '<br>')),
+    y: probs,
+    marker: {
+      color: colors,
+      line: { color: 'rgba(255,255,255,0.15)', width: 1 }
+    },
+    text: probs.map(p => p.toFixed(1) + '%'),
+    textposition: 'outside',
+    textfont: { color: TEXT, size: 13, weight: 700 },
+    hovertemplate: '<b>%{x}</b><br>Probability: %{y:.2f}%<extra></extra>',
+  }], {
+    ...layout_base,
+    margin: { l: 40, r: 20, t: 40, b: 80 },
+    yaxis: { ...layout_base.yaxis, title: 'Championship Probability (%)', range: [0, Math.max(...probs) * 1.25] },
+    shapes: [{
+      type: 'line', xref: 'paper', x0: 0, x1: 1,
+      y0: 10, y1: 10,
+      line: { color: 'rgba(255,255,255,0.15)', dash: 'dot', width: 1 }
+    }]
+  }, config);
+})();
+
+// ── CHART 2: Scatter - Historical vs 2026 WR ────────────────────
+(function() {
+  const teams = Object.keys(PREDS);
+  Plotly.newPlot('chart-scatter', [{
+    type: 'scatter',
+    mode: 'markers+text',
+    x: teams.map(t => PREDS[t].historical_wr),
+    y: teams.map(t => PREDS[t].current_wr),
+    text: teams.map(t => t.split(' ').map(w => w[0]).join('')),
+    textposition: 'top center',
+    marker: {
+      color: teams.map(teamColor),
+      size: teams.map(t => 10 + PREDS[t].championship_probability * 0.8),
+      line: { color: 'rgba(255,255,255,0.3)', width: 1 }
+    },
+    hovertext: teams.map(t => `<b>${t}</b><br>Historical WR: ${PREDS[t].historical_wr}%<br>2026 WR: ${PREDS[t].current_wr}%`),
+    hovertemplate: '%{hovertext}<extra></extra>',
+  }], {
+    ...layout_base,
+    margin: { l: 55, r: 20, t: 20, b: 55 },
+    xaxis: { ...layout_base.xaxis, title: 'Historical Win Rate (%)' },
+    yaxis: { ...layout_base.yaxis, title: '2026 Win Rate (%)' },
+  }, config);
+})();
+
+// ── CHART 3: Recent Form vs 2026 Horizontal ──────────────────────
+(function() {
+  const teams = Object.keys(PREDS).sort((a,b) => PREDS[b].recent_wr - PREDS[a].recent_wr);
+  Plotly.newPlot('chart-form', [{
+    type: 'bar', orientation: 'h',
+    name: 'Recent Form (Last 2 Seasons)',
+    y: teams,
+    x: teams.map(t => PREDS[t].recent_wr),
+    marker: { color: ACCENT, opacity: 0.85 },
+    hovertemplate: '<b>%{y}</b><br>Recent Form: %{x:.1f}%<extra></extra>',
+  }, {
+    type: 'bar', orientation: 'h',
+    name: '2026 Win Rate',
+    y: teams,
+    x: teams.map(t => PREDS[t].current_wr),
+    marker: { color: GOLD, opacity: 0.85 },
+    hovertemplate: '<b>%{y}</b><br>2026 Win Rate: %{x:.1f}%<extra></extra>',
+  }], {
+    ...layout_base,
+    margin: { l: 200, r: 30, t: 10, b: 40 },
+    barmode: 'group',
+    xaxis: { ...layout_base.xaxis, title: 'Win Rate (%)' },
+    legend: { ...layout_base.legend, orientation: 'h', y: -0.12 },
+  }, config);
+})();
+
+// ── CHART 4: All-time Win Rate ───────────────────────────────────
+(function() {
+  const ts = HIST.team_stats;
+  const teams = Object.keys(ts).filter(t => ts[t].total_played > 20)
+                .sort((a,b) => ts[b].win_rate - ts[a].win_rate);
+  Plotly.newPlot('chart-winrate', [{
+    type: 'bar',
+    x: teams,
+    y: teams.map(t => ts[t].win_rate),
+    marker: { color: teams.map(teamColor) },
+    text: teams.map(t => ts[t].win_rate + '%'),
+    textposition: 'outside',
+    hovertemplate: '<b>%{x}</b><br>Win Rate: %{y:.1f}%<extra></extra>',
+  }], {
+    ...layout_base,
+    margin: { l: 40, r: 10, t: 30, b: 120 },
+    xaxis: { ...layout_base.xaxis, tickangle: -35 },
+    yaxis: { ...layout_base.yaxis, title: 'Win Rate (%)' },
+  }, config);
+})();
+
+// ── CHART 5: Matches played ──────────────────────────────────────
+(function() {
+  const ts = HIST.team_stats;
+  const teams = Object.keys(ts).filter(t => ts[t].total_played > 10)
+                .sort((a,b) => ts[b].total_played - ts[a].total_played);
+  Plotly.newPlot('chart-matches', [{
+    type: 'bar',
+    x: teams,
+    y: teams.map(t => ts[t].total_played),
+    marker: { color: teams.map(t => teamColor(t)), opacity: 0.85 },
+    text: teams.map(t => ts[t].total_played),
+    textposition: 'outside',
+    hovertemplate: '<b>%{x}</b><br>Matches: %{y}<extra></extra>',
+  }], {
+    ...layout_base,
+    margin: { l: 40, r: 10, t: 30, b: 120 },
+    xaxis: { ...layout_base.xaxis, tickangle: -35 },
+    yaxis: { ...layout_base.yaxis, title: 'Matches Played' },
+  }, config);
+})();
+
+// ── CHART 6: Titles ──────────────────────────────────────────────
+(function() {
+  const ts = HIST.team_stats;
+  const teams = Object.keys(ts).filter(t => ts[t].titles > 0)
+                .sort((a,b) => ts[b].titles - ts[a].titles);
+  Plotly.newPlot('chart-titles', [{
+    type: 'bar',
+    x: teams,
+    y: teams.map(t => ts[t].titles),
+    marker: {
+      color: teams.map(teamColor),
+      line: { color: GOLD, width: 1.5 }
+    },
+    text: teams.map(t => '🏆 ' + ts[t].titles),
+    textposition: 'outside',
+    textfont: { size: 14 },
+    hovertemplate: '<b>%{x}</b><br>Titles: %{y}<extra></extra>',
+  }], {
+    ...layout_base,
+    margin: { l: 40, r: 10, t: 30, b: 120 },
+    xaxis: { ...layout_base.xaxis, tickangle: -25 },
+    yaxis: { ...layout_base.yaxis, title: 'Championships', dtick: 1 },
+  }, config);
+})();
+
+// ── CHART 7: Venue analysis ──────────────────────────────────────
+(function() {
+  const venues = HIST.venue_stats.sort((a,b) => b.bat_first_pct - a.bat_first_pct);
+  const names = venues.map(v => v.venue.length > 35 ? v.venue.slice(0, 35) + '…' : v.venue);
+  Plotly.newPlot('chart-venue', [{
+    type: 'bar', orientation: 'h',
+    y: names,
+    x: venues.map(v => v.bat_first_pct),
+    text: venues.map(v => v.bat_first_pct + '%'),
+    textposition: 'inside',
+    marker: {
+      color: venues.map(v => v.bat_first_pct > 50 ? '#00e676' : '#ff4444'),
+      opacity: 0.85,
+    },
+    hovertemplate: '<b>%{y}</b><br>Bat First Wins: %{x:.1f}%<br>Matches: %{customdata}<extra></extra>',
+    customdata: venues.map(v => v.matches),
+  }], {
+    ...layout_base,
+    margin: { l: 300, r: 60, t: 10, b: 50 },
+    xaxis: { ...layout_base.xaxis, title: 'Batting First Win %', range: [0, 100] },
+    shapes: [{ type: 'line', xref: 'x', yref: 'paper', x0: 50, x1: 50, y0: 0, y1: 1,
+      line: { color: 'rgba(255,255,255,0.3)', dash: 'dot', width: 1.5 } }],
+  }, config);
+})();
+
+// ── CHART 8: Season trend ────────────────────────────────────────
+(function() {
+  const seasons = HIST.seasons;
+  Plotly.newPlot('chart-season', [{
+    type: 'scatter', mode: 'lines+markers',
+    x: seasons.map(s => s.season),
+    y: seasons.map(s => s.total_matches),
+    line: { color: ACCENT, width: 3 },
+    marker: { color: GOLD, size: 9, line: { color: ACCENT, width: 2 } },
+    fill: 'tozeroy',
+    fillcolor: 'rgba(0,200,255,0.08)',
+    hovertemplate: '<b>%{x}</b><br>Matches: %{y}<extra></extra>',
+  }], {
+    ...layout_base,
+    margin: { l: 50, r: 20, t: 20, b: 60 },
+    xaxis: { ...layout_base.xaxis, title: 'Season', tickangle: -30 },
+    yaxis: { ...layout_base.yaxis, title: 'Total Matches' },
+  }, config);
+})();
+
+// ── TAB SWITCHING ─────────────────────────────────────────────────
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  // Re-trigger plotly resize
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
+}
+
+// ── SMOOTH SCROLL FOR NAV ─────────────────────────────────────────
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    document.querySelectorAll('nav a').forEach(x => x.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
